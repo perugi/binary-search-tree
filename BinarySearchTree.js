@@ -67,9 +67,10 @@ class BinarySearchTree {
 
   delete(value, node = this.#root) {
     if (node === null) {
-      return node;
+      return null;
     }
 
+    // Keep looking for the node with the specified value
     if (value < node.data) {
       node.left = this.delete(value, node.left);
       return node;
@@ -79,6 +80,8 @@ class BinarySearchTree {
       return node;
     }
 
+    // The node has been found, delete it by returning its child (or null if it's a leaf)
+    // to be connected to the parent.
     if (node.left === null) {
       return node.right;
     }
@@ -86,7 +89,7 @@ class BinarySearchTree {
       return node.left;
     }
 
-    // Both children exist.
+    // If both children exist, it's a bit more complicated
     // Start by finding the successor (next in-order value) by looking for
     // the left - most node of the right subtree.
     let successorParent = node;
