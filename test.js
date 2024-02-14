@@ -1,0 +1,20 @@
+const BinarySearchTree = require('./BinarySearchTree');
+
+const bst = new BinarySearchTree();
+bst.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+bst.prettyPrint(bst.root);
+bst.insert(10);
+bst.insert(12);
+bst.insert(11);
+bst.insert(9);
+bst.prettyPrint();
+bst.delete(12);
+bst.prettyPrint();
+bst.delete(8);
+bst.prettyPrint();
+bst.delete(4);
+bst.prettyPrint();
+bst.delete(3);
+bst.prettyPrint();
+const findNode = bst.find(324);
+bst.prettyPrint(findNode);
