@@ -35,7 +35,3 @@ console.log(`level-order: ${bst.levelOrder()}`);
 console.log(`pre-order: ${bst.preOrder()}`);
 console.log(`post-order: ${bst.postOrder()}`);
 console.log(`in-order: ${bst.inOrder()}`);
-
-const bst2 = new BinarySearchTree();
-bst2.buildTree([1, 7, 4, 24, 8, 7]);
-console.log(bst2.inOrder()); // [ 1, 4, 7, 8, 24]
