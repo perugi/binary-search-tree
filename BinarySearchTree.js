@@ -15,12 +15,12 @@ class BinarySearchTree {
     const arrayNoDupes = [...new Set(array)];
     arrayNoDupes.sort((a, b) => a - b);
 
-    this.#root = this.createBST(arrayNoDupes, 0, arrayNoDupes.length - 1);
+    this.#root = this.#createBST(arrayNoDupes, 0, arrayNoDupes.length - 1);
 
     return this.#root;
   }
 
-  createBST(array, start, end) {
+  #createBST(array, start, end) {
     if (start > end) {
       return null;
     }
@@ -28,8 +28,8 @@ class BinarySearchTree {
     const mid = Math.floor((start + end) / 2);
     const root = new Node(array[mid]);
 
-    root.left = this.createBST(array, start, mid - 1);
-    root.right = this.createBST(array, mid + 1, end);
+    root.left = this.#createBST(array, start, mid - 1);
+    root.right = this.#createBST(array, mid + 1, end);
 
     return root;
   }
@@ -186,8 +186,8 @@ class BinarySearchTree {
       if (node === null) return undefined;
 
       callback(node);
-      this.inOrder(callback, node.left);
-      this.inOrder(callback, node.right);
+      this.preOrder(callback, node.left);
+      this.preOrder(callback, node.right);
 
       return undefined;
     }
@@ -196,8 +196,8 @@ class BinarySearchTree {
 
     let values = [];
     values.push(node.data);
-    values = values.concat(this.inOrder(callback, node.left));
-    values = values.concat(this.inOrder(callback, node.right));
+    values = values.concat(this.preOrder(callback, node.left));
+    values = values.concat(this.preOrder(callback, node.right));
 
     return values;
   }
@@ -206,8 +206,8 @@ class BinarySearchTree {
     if (callback) {
       if (node === null) return undefined;
 
-      this.inOrder(callback, node.left);
-      this.inOrder(callback, node.right);
+      this.postOrder(callback, node.left);
+      this.postOrder(callback, node.right);
       callback(node);
 
       return undefined;
@@ -216,8 +216,8 @@ class BinarySearchTree {
     if (node === null) return [];
 
     let values = [];
-    values = values.concat(this.inOrder(callback, node.left));
-    values = values.concat(this.inOrder(callback, node.right));
+    values = values.concat(this.postOrder(callback, node.left));
+    values = values.concat(this.postOrder(callback, node.right));
     values.push(node.data);
 
     return values;
@@ -230,6 +230,51 @@ class BinarySearchTree {
     const rightHeight = this.height(node.right);
 
     return leftHeight >= rightHeight ? leftHeight + 1 : rightHeight + 1;
+  }
+
+  depth(targetNode, currentNode = this.#root, currentDepth = 0) {
+    if (currentNode === null) {
+      // Tree is empty or the node does not exist in the tree.
+      return null;
+    }
+
+    if (currentNode.data === targetNode.data) {
+      return currentDepth;
+    }
+    if (targetNode.data < currentNode.data) {
+      return this.depth(targetNode, currentNode.left, currentDepth + 1);
+    }
+    return this.depth(targetNode, currentNode.right, currentDepth + 1);
+  }
+
+  isBalanced() {
+    let treeBalanced = true;
+
+    this.levelOrder((node) => {
+      const height = this.height(node);
+      const minHeight = this.#findMinHeight(node);
+
+      if (height - minHeight > 1) {
+        treeBalanced = false;
+      }
+    });
+
+    return treeBalanced;
+  }
+
+  rebalance() {
+    const values = this.inOrder();
+
+    this.#root = this.#createBST(values, 0, values.length - 1);
+  }
+
+  #findMinHeight(node) {
+    if (node === null) return -1;
+
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
+
+    return leftHeight >= rightHeight ? rightHeight + 1 : leftHeight + 1;
   }
 }
 

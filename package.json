@@ -1,21 +1,21 @@
 {
   "name": "@perugi/changeme",
   "version": "1.0.0",
-  "description": "CHANGEME",
-  "main": "package.js",
+  "description": "A practice implementation of a Binary Search Tree.",
+  "main": "BinarySearchTree.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/perugi/CHANGEME.git"
+    "url": "git+https://github.com/perugi/binary-search-tree.git"
   },
   "author": "Dominik Perusko",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/perugi/CHANGEME/issues"
+    "url": "https://github.com/perugi/binary-search-tree/issues"
   },
-  "homepage": "https://github.com/perugi/CHANGEME#readme",
+  "homepage": "https://github.com/perugi/binary-search-tree#readme",
   "devDependencies": {
     "@perugi/eslint-config": "^1.0.3",
     "@perugi/prettier-config": "^1.0.2",
