@@ -1,5 +1,5 @@
 {
-  "name": "@perugi/changeme",
+  "name": "@perugi/binary-search-tree",
   "version": "1.0.0",
   "description": "A practice implementation of a Binary Search Tree.",
   "main": "BinarySearchTree.js",
