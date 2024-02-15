@@ -128,6 +128,109 @@ class BinarySearchTree {
 
     return node;
   }
+
+  levelOrder(callback) {
+    if (callback) {
+      if (!this.#root) return undefined;
+
+      const nodeQueue = [this.#root];
+
+      while (nodeQueue.length !== 0) {
+        const processedNode = nodeQueue.shift();
+        callback(processedNode);
+        if (processedNode.left) nodeQueue.push(processedNode.left);
+        if (processedNode.right) nodeQueue.push(processedNode.right);
+      }
+
+      return undefined;
+    }
+
+    if (!this.#root) return [];
+
+    const nodeQueue = [this.#root];
+    const values = [];
+
+    while (nodeQueue.length !== 0) {
+      const processedNode = nodeQueue.shift();
+      values.push(processedNode.data);
+      if (processedNode.left) nodeQueue.push(processedNode.left);
+      if (processedNode.right) nodeQueue.push(processedNode.right);
+    }
+
+    return values;
+  }
+
+  inOrder(callback, node = this.#root) {
+    if (callback) {
+      if (node === null) return undefined;
+
+      this.inOrder(callback, node.left);
+      callback(node);
+      this.inOrder(callback, node.right);
+
+      return undefined;
+    }
+
+    if (node === null) return [];
+
+    let values = [];
+    values = values.concat(this.inOrder(callback, node.left));
+    values.push(node.data);
+    values = values.concat(this.inOrder(callback, node.right));
+
+    return values;
+  }
+
+  preOrder(callback, node = this.#root) {
+    if (callback) {
+      if (node === null) return undefined;
+
+      callback(node);
+      this.inOrder(callback, node.left);
+      this.inOrder(callback, node.right);
+
+      return undefined;
+    }
+
+    if (node === null) return [];
+
+    let values = [];
+    values.push(node.data);
+    values = values.concat(this.inOrder(callback, node.left));
+    values = values.concat(this.inOrder(callback, node.right));
+
+    return values;
+  }
+
+  postOrder(callback, node = this.#root) {
+    if (callback) {
+      if (node === null) return undefined;
+
+      this.inOrder(callback, node.left);
+      this.inOrder(callback, node.right);
+      callback(node);
+
+      return undefined;
+    }
+
+    if (node === null) return [];
+
+    let values = [];
+    values = values.concat(this.inOrder(callback, node.left));
+    values = values.concat(this.inOrder(callback, node.right));
+    values.push(node.data);
+
+    return values;
+  }
+
+  height(node) {
+    if (node === null) return -1;
+
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
+
+    return leftHeight >= rightHeight ? leftHeight + 1 : rightHeight + 1;
+  }
 }
 
 module.exports = BinarySearchTree;
